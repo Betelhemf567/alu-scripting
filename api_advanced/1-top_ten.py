@@ -1,16 +1,19 @@
 #!/usr/bin/python3
 """ top_ten.py """
 import requests
-
+import sys  # Import sys for exiting
 
 def top_ten(subreddit):
     """ prints the titles of the first 10 hot posts listed in a subreddit """
     url = 'https://www.reddit.com/r/{}/hot.json?limit=10'.format(subreddit)
-    headers = {'User-Agent': 'Naynan12'}
+    headers = {'User-Agent': 'Mozilla/5.0'}
     response = requests.get(url, headers=headers, allow_redirects=False)
+
     if response.status_code != 200:
         print(None)
-        return
+        sys.exit(0)  # Exit cleanly after printing None
+        return  # This return is now redundant but doesn't hurt
+
     posts = response.json()['data']['children']
     for post in posts:
-        print(post['data']['title'])i
+        print(post['data']['title'])
